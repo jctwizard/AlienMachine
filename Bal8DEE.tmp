@@ -12,7 +12,6 @@ bounce = 0.1
 radius = 37.1452
 
 [node name="Ball" type="RigidBody2D"]
-input_pickable = true
 mass = 12.07
 inertia = 1.62
 physics_material_override = SubResource("1")

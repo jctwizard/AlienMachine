@@ -5,12 +5,6 @@ extends Button
 func _ready():
 	text = "move"
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
-
 func _on_pressed():
 	if text == "moving":
 		text = "move"
