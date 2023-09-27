@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://byhds7r8emer3"]
+
+[ext_resource type="PackedScene" uid="uid://c6281oikbpfdn" path="res://godot_icon.tscn" id="1_n87qy"]
+[ext_resource type="Script" path="res://IconButton.gd" id="2_pav6q"]
+
+[node name="ClickableIcon" type="Node2D"]
+
+[node name="GodotIcon" parent="." instance=ExtResource("1_n87qy")]
+position = Vector2(0, 0)
+
+[node name="Button" type="Button" parent="GodotIcon"]
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+text = "move"
+script = ExtResource("2_pav6q")
+
+[node name="Timer" type="Timer" parent="GodotIcon"]
+autostart = true
+
+[connection signal="pressed" from="GodotIcon/Button" to="GodotIcon" method="_on_button_pressed"]
+[connection signal="pressed" from="GodotIcon/Button" to="GodotIcon/Button" method="_on_pressed"]
