@@ -1,0 +1,20 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://cmksjrxuobjjk"]
+
+[ext_resource type="FontFile" uid="uid://c1r8yuhxeqhwn" path="res://fonts/GladlyAccept.ttf" id="1_xvh0f"]
+[ext_resource type="StyleBox" uid="uid://djskoc58qsvn1" path="res://BasicBox.tres" id="2_1vea5"]
+
+[resource]
+default_font_size = 64
+/font_sizes/font_size = 64
+/fonts/font = ExtResource("1_xvh0f")
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/font_sizes/font_size = 48
+Button/fonts/font = ExtResource("1_xvh0f")
+Button/styles/disabled = ExtResource("2_1vea5")
+Button/styles/focus = ExtResource("2_1vea5")
+Button/styles/hover = ExtResource("2_1vea5")
+Button/styles/normal = ExtResource("2_1vea5")
+Button/styles/pressed = ExtResource("2_1vea5")
+Label/colors/font_color = Color(1, 1, 1, 1)
+Label/font_sizes/font_size = 48
+Label/fonts/font = ExtResource("1_xvh0f")

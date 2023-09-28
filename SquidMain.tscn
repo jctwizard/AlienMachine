@@ -1,0 +1,99 @@
+[gd_scene load_steps=13 format=3 uid="uid://bj0o71myklif"]
+
+[ext_resource type="PackedScene" uid="uid://bmstl31ekh27y" path="res://Player.tscn" id="1_1ot7u"]
+[ext_resource type="Script" path="res://SquidMain.gd" id="1_luvp4"]
+[ext_resource type="PackedScene" uid="uid://bihh0m377lmvj" path="res://Squid.tscn" id="2_ykllc"]
+[ext_resource type="Script" path="res://SquidBackground.gd" id="3_aijgm"]
+[ext_resource type="PackedScene" uid="uid://ddmnc2adbdece" path="res://SquidUI.tscn" id="4_05wbm"]
+[ext_resource type="Texture2D" uid="uid://dv6rx85s1gy3i" path="res://art/ballBlue_10.png" id="6_cyuvg"]
+[ext_resource type="AudioStream" uid="uid://cdgqnium14toh" path="res://art/gameover.wav" id="8_3tfti"]
+
+[sub_resource type="Gradient" id="Gradient_q2yti"]
+offsets = PackedFloat32Array(0, 0.300613, 0.674847, 1)
+colors = PackedColorArray(0.566406, 0.613281, 0.800781, 1, 0.627398, 0.593134, 0.752383, 1, 0.529805, 0.625504, 0.767918, 1, 0.5625, 0.609375, 0.796875, 1)
+
+[sub_resource type="Gradient" id="Gradient_o75xx"]
+colors = PackedColorArray(1, 1, 1, 0.541176, 1, 1, 1, 0.654902)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ohf5k"]
+gradient = SubResource("Gradient_o75xx")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_niu16"]
+emission_shape = 3
+emission_box_extents = Vector3(256, 0.1, 1)
+particle_flag_disable_z = true
+gravity = Vector3(0, -100, 0)
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+linear_accel_min = -1.0
+linear_accel_max = 1.0
+scale_min = 0.05
+scale_max = 0.2
+color = Color(1, 1, 1, 0.290196)
+color_ramp = SubResource("GradientTexture1D_ohf5k")
+turbulence_enabled = true
+turbulence_noise_strength = 0.5
+turbulence_noise_scale = 5.0
+turbulence_noise_speed_random = 0.1
+
+[sub_resource type="Curve2D" id="Curve2D_6dr83"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 512, 0, 0, 0, 0, 0, 512, 512, 0, 0, 0, 0, 0, 512, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 512, 0)
+}
+point_count = 5
+
+[node name="SquidMain" type="Node"]
+script = ExtResource("1_luvp4")
+squid_scene = ExtResource("2_ykllc")
+min_squid_speed = 100.0
+max_squid_speed = 150.0
+squid_timer_decrease = 0.02
+
+[node name="SquidBackground" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.568627, 0.615686, 0.803922, 1)
+script = ExtResource("3_aijgm")
+gradient = SubResource("Gradient_q2yti")
+
+[node name="BackgroundParticles" type="GPUParticles2D" parent="."]
+position = Vector2(256, 600)
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_niu16")
+texture = ExtResource("6_cyuvg")
+lifetime = 30.0
+
+[node name="Player" parent="." instance=ExtResource("1_1ot7u")]
+
+[node name="SquidTimer" type="Timer" parent="."]
+wait_time = 1.5
+
+[node name="ScoreTimer" type="Timer" parent="."]
+
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="StartPosition" type="Marker2D" parent="."]
+position = Vector2(256, 256)
+
+[node name="SquidPath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_6dr83")
+
+[node name="SquidSpawn" type="PathFollow2D" parent="SquidPath"]
+position = Vector2(512, 0)
+rotation = 1.5708
+
+[node name="SquidUI" parent="." instance=ExtResource("4_05wbm")]
+
+[node name="GameOverSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_3tfti")
+
+[connection signal="player_hit" from="Player" to="." method="game_over"]
+[connection signal="timeout" from="SquidTimer" to="." method="_on_squid_timer_timeout"]
+[connection signal="timeout" from="ScoreTimer" to="." method="_on_score_timer_timeout"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
+[connection signal="start_game" from="SquidUI" to="." method="new_game"]

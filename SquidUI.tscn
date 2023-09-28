@@ -1,0 +1,67 @@
+[gd_scene load_steps=5 format=3 uid="uid://ddmnc2adbdece"]
+
+[ext_resource type="Theme" uid="uid://cmksjrxuobjjk" path="res://BasicTheme.tres" id="1_jqtj6"]
+[ext_resource type="Script" path="res://SquidUI.gd" id="1_s2qe2"]
+
+[sub_resource type="InputEventAction" id="InputEventAction_gtsjy"]
+action = &"start_game"
+
+[sub_resource type="Shortcut" id="Shortcut_xcx2b"]
+events = [SubResource("InputEventAction_gtsjy")]
+
+[node name="SquidUI" type="CanvasLayer"]
+script = ExtResource("1_s2qe2")
+
+[node name="ScoreLabel" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -64.0
+offset_right = 64.0
+offset_bottom = 128.0
+grow_horizontal = 2
+theme = ExtResource("1_jqtj6")
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Message" type="Label" parent="."]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.375
+anchor_right = 0.5
+anchor_bottom = 0.375
+offset_left = -192.0
+offset_top = -128.0
+offset_right = 192.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_jqtj6")
+text = "dodge the squid!"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="StartButton" type="Button" parent="."]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.797
+anchor_right = 0.5
+anchor_bottom = 0.797
+offset_left = -96.0
+offset_top = -40.064
+offset_right = 96.0
+offset_bottom = 39.936
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_jqtj6")
+shortcut = SubResource("Shortcut_xcx2b")
+text = "start"
+
+[node name="MessageTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="timeout" from="MessageTimer" to="." method="_on_message_timer_timeout"]

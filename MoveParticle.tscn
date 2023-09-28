@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://fy3oiqvrdnxk"]
+
+[ext_resource type="Texture2D" uid="uid://dv6rx85s1gy3i" path="res://art/ballBlue_10.png" id="1_3p76y"]
+
+[sub_resource type="Gradient" id="Gradient_uucn3"]
+offsets = PackedFloat32Array(0, 0.350993, 0.642384, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.67451, 1, 1, 1, 0.694118, 1, 1, 1, 0)
+
+[node name="MoveParticle" type="CPUParticles2D"]
+position = Vector2(0, 18)
+amount = 20
+lifetime = 2.0
+texture = ExtResource("1_3p76y")
+emission_shape = 1
+emission_sphere_radius = 5.0
+direction = Vector2(0, 1)
+spread = 20.0
+gravity = Vector2(0, -50)
+initial_velocity_min = 75.0
+initial_velocity_max = 100.0
+scale_amount_min = 0.05
+scale_amount_max = 0.1
+color = Color(1, 1, 1, 0.709804)
+color_ramp = SubResource("Gradient_uucn3")

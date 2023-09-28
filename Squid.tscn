@@ -1,0 +1,77 @@
+[gd_scene load_steps=11 format=3 uid="uid://bihh0m377lmvj"]
+
+[ext_resource type="Texture2D" uid="uid://d11jxvdhtm23c" path="res://art/enemyFlyingAlt_1.png" id="1_dq4f7"]
+[ext_resource type="Script" path="res://Squid.gd" id="1_gkki5"]
+[ext_resource type="PackedScene" uid="uid://fy3oiqvrdnxk" path="res://MoveParticle.tscn" id="2_iuwgf"]
+[ext_resource type="Texture2D" uid="uid://cqqhbyf1d5q5c" path="res://art/enemyFlyingAlt_2.png" id="2_mxhlw"]
+[ext_resource type="Texture2D" uid="uid://congol1e2obxl" path="res://art/enemySwimming_1.png" id="3_twtdn"]
+[ext_resource type="Texture2D" uid="uid://dfpci52nhq24k" path="res://art/enemySwimming_2.png" id="4_m1eyf"]
+[ext_resource type="Texture2D" uid="uid://cvli2a0ol27lb" path="res://art/enemyWalking_1.png" id="5_rve7i"]
+[ext_resource type="Texture2D" uid="uid://cut6fwogb2nj4" path="res://art/enemyWalking_2.png" id="6_6xdfu"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4lo3v"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_dq4f7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_mxhlw")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_twtdn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_m1eyf")
+}],
+"loop": true,
+"name": &"swim",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_rve7i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_6xdfu")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 3.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_b6ejc"]
+
+[node name="Squid" type="RigidBody2D" groups=["squid"]]
+collision_mask = 0
+gravity_scale = 0.0
+script = ExtResource("1_gkki5")
+
+[node name="MoveParticle" parent="." instance=ExtResource("2_iuwgf")]
+position = Vector2(-7, 0)
+rotation = 1.57079
+amount = 5
+lifetime = 0.5
+initial_velocity_min = 30.0
+initial_velocity_max = 40.0
+scale_amount_min = 0.03
+scale_amount_max = 0.06
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+sprite_frames = SubResource("SpriteFrames_4lo3v")
+animation = &"walk"
+
+[node name="VisibleNotifier" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(3, 3)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_b6ejc")
+
+[connection signal="screen_exited" from="VisibleNotifier" to="." method="_on_visible_notifier_screen_exited"]
